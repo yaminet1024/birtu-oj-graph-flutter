@@ -18,9 +18,9 @@ class _SearchPageState extends State<SearchPage>{
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        constraints: BoxConstraints(
-          minWidth: 300
-        ),
+        // constraints: BoxConstraints(
+        //   minWidth: 300
+        // ),
         child: Column(
           children: <Widget>[
             Container(
@@ -53,19 +53,19 @@ class _SearchPageState extends State<SearchPage>{
             ),
             Expanded(
               child: Container(
+                // height: double.infinity,
+                child: SearchFailed(),
                 width: double.infinity,
-                height: 200,
+                // height: 200,
                 decoration: BoxDecoration(
                   gradient: LinearGradient(colors: [
                     Color(0XFFF8FAFC),
+                    // Colors.red,
                     Color(0xFFF8FBFF),
                   ]),      
                 ), 
               ),
             ),
-            Container(
-              child: SearchFailed()
-            )
           ]
         )
       ),

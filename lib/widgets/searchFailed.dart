@@ -6,19 +6,22 @@ class SearchFailed extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Image.asset(
              "assets/no_result.png",
-              // width: ResponsiveLayout.isSmallScreen(context)
-              //     ? 12
-              //     : ResponsiveLayout.isMediumScreen(context) ? 12 : 20,
-              // height: ResponsiveLayout.isSmallScreen(context)
-              //     ? 12
-              //     : ResponsiveLayout.isMediumScreen(context) ? 12 : 20,
-              width: 50,
-              height: 50,
+              scale: 1,
           ),
-          Text("暂时木有内容呀~ ~")
+          SizedBox(
+            height: 20
+          ),
+          Text(
+            "暂时木有内容呀~ ~",
+            style: TextStyle(
+              fontSize: 18,
+              color: Colors.black54,
+            ),
+          )
         ],
       )
     );

@@ -100,10 +100,10 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "86f263cc8b4c456c1019d0327f9c6aaad4949eec"
+      resolved-ref: "1b79fac6f7bffb9fa81a8e9fa376cd81b901838c"
       url: "https://github.com/yaminet1024/oj-grpc-lib"
     source: git
-    version: "0.0.1"
+    version: "0.0.2"
   http:
     dependency: transitive
     description:
@@ -227,7 +227,7 @@ packages:
       name: test_api
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "0.2.14"
+    version: "0.2.15"
   typed_data:
     dependency: transitive
     description:

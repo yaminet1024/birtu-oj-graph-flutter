@@ -39,6 +39,7 @@ class MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
     GrpcService().sayHelloToGrpc();
+    GrpcService().getProblem();
   }
 
   @override

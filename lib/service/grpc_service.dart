@@ -1,5 +1,7 @@
+// import 'dart:ffi';
 import 'dart:io';
 
+import 'package:fixnum/fixnum.dart';
 import 'package:grpc/grpc.dart';
 import 'package:grpc/grpc_web.dart';
 import 'package:grpclib/grpclib.dart';
@@ -35,7 +37,7 @@ class GrpcService{
         _channelClient = GrpcWebClientChannel.xhr(Uri.parse("http://localhost:6060"));
       }
     }catch (e){
-      _channelClient = GrpcWebClientChannel.xhr(Uri.parse("http://localhost:6060"));
+      _channelClient = GrpcWebClientChannel.xhr(Uri.parse("http://ttl317.top:6060"));
     }
   }
 
@@ -43,6 +45,15 @@ class GrpcService{
     final helloStub = GreeterClient(_channelClient);
     var response = await helloStub.sayHello(HelloRequest()..name="i' ycp, love hechong");
     print(response.message);
+  }
+
+  void getProblem() async{
+    final problemStub = ProblemClient(_channelClient);
+    // var response = await 
+    var requestParams = new ProblemRequest();
+    requestParams.limit = Int64(2);
+    var response = await problemStub.getProblem(requestParams);
+    print(response.content);
   }
 
 
