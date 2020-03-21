@@ -41,7 +41,7 @@ class SearchPageState extends State<SearchPage>{
                         NavBar(showSearch: false),
                         SearchInput(
                           onClick: (){
-
+                            print("喻彩平大宝贝，我爱你呀");
                           },
                         )
                       ]
