@@ -9,7 +9,7 @@ class Search extends StatefulWidget {
 }
 
 class _SearchState extends State {
-  String inputText = '';
+  String _inputText = '';
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -42,13 +42,13 @@ class _SearchState extends State {
                         ),
                         onChanged: (String val) {
                           setState(() {
-                            inputText = val;
+                            _inputText = val;
                           });
                         },
                   )),
               Expanded(
                 flex: 2,
-                child: SendBtn(searchText: inputText),
+                child: SendBtn(searchText: _inputText),
               )
             ],
           ),

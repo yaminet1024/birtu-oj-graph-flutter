@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 import '../widgets/navbar.dart';
+import '../widgets/searchFailed.dart';
 import '../utils/responsiveLayout.dart';
 
 
 class SearchPage extends StatefulWidget{
   @override
   State<StatefulWidget> createState() {
-    return SearchPageState();
+    return _SearchPageState();
   }
 
 }
 
-class SearchPageState extends State<SearchPage>{
+class _SearchPageState extends State<SearchPage>{
+  // var _searchResult = null;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,7 +62,10 @@ class SearchPageState extends State<SearchPage>{
                   ]),      
                 ), 
               ),
-              ),
+            ),
+            Container(
+              child: SearchFailed()
+            )
           ]
         )
       ),
@@ -77,7 +82,8 @@ typedef GestureTapCallback = void Function();
 //}
 
 class SearchInput extends StatelessWidget {
-  const SearchInput({this.onClick});
+    // SearchInput({this.onClick});
+    SearchInput({Key key, this.onClick}) : super(key: key);
 
   final GestureTapCallback onClick;
 
@@ -93,7 +99,7 @@ class SearchInput extends StatelessWidget {
             style: TextStyle(textBaseline: TextBaseline.alphabetic),
             decoration: InputDecoration(
               hintText: "输入问题搜索...",
-              contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              contentPadding: EdgeInsets.only(left: 20, right: 40, top: 10, bottom: 10),
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.all(
                   Radius.circular(30)
@@ -115,16 +121,18 @@ class SearchInput extends StatelessWidget {
             )
           ),
         ),
-        Positioned(
+        Container(
+          margin: EdgeInsets.only(right:60, bottom:12),
           child: InkWell(
             child: Icon(
               Icons.search,
               color: Colors.black54,
             ),
             onTap: onClick,
+            // onTap: () {
+            //   print(onClick);
+            // },
           ),
-          right: 60,
-          top: 12,
         ),
       ],
     );
