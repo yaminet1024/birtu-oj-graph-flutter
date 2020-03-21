@@ -1,3 +1,4 @@
+import 'package:educational_robot/service/grpc_service.dart';
 import 'package:flutter/material.dart';
 import 'widgets/navbar.dart';
 import 'utils/responsiveLayout.dart';
@@ -23,7 +24,23 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatelessWidget {
+class MyHomePage extends StatefulWidget{
+  @override
+  State<StatefulWidget> createState() {
+    return MyHomePageState();
+  }
+
+}
+
+class MyHomePageState extends State<MyHomePage> {
+
+
+  @override
+  void initState() {
+    super.initState();
+    GrpcService().sayHelloToGrpc();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
