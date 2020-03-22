@@ -38,29 +38,37 @@ class MyHomePageState extends State<MyHomePage> {
       ),
       child: Scaffold(
           backgroundColor: Colors.transparent,
-          body: SingleChildScrollView(
-              child: Container(
-                child: Column(
-                  children: <Widget>[
-                    NavBar(showSearch: false,onNavBarItemClick: (String s){
-                      setState(() {
-                        showChatView = !showChatView;
-                      });
-                    },),
-                    Container(
-                      height: 700,
-                      child: Stack(
-                        children: <Widget>[
-                          Body(),
-                          showChatView? Positioned(
-                            right: 40,
-                            child: ChatBoxView(),): Container(),
-                        ],
+          body: SafeArea(
+            child: SingleChildScrollView(
+                child: Container(
+                  child: Column(
+                    children: <Widget>[
+                      NavBar(showSearch: false,onNavBarItemClick: (String s){
+                        setState(() {
+                          showChatView = !showChatView;
+                        });
+                      },),
+                      Container(
+                        height: 700,
+                        child: Stack(
+                          children: <Widget>[
+                            Body(),
+                            showChatView? Positioned(
+                              right: 40,
+                              child: ChatBoxView(
+                                onRemoveClick: (){
+                                  setState(() {
+                                    showChatView = !showChatView;
+                                  });
+                                },
+                              ),): Container(),
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-              )
+                    ],
+                  ),
+                )
+            ),
           )
       ),
     );
@@ -168,7 +176,7 @@ class SmallChild extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 12.0, top: 20),
+              padding: const EdgeInsets.only(left: 0.0, top: 20),
               child: Text("开始我们的学习吧！"),
             ),
             SizedBox(
@@ -180,9 +188,9 @@ class SmallChild extends StatelessWidget {
                 scale: 1,
               ),
             ),
-            SizedBox(
-              height: 32,
-            ),
+//            SizedBox(
+//              height: 32,
+//            ),
             Search(),
             SizedBox(
               height: 30,

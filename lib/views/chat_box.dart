@@ -1,14 +1,26 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+typedef RemoveClick = void Function();
+
+
 class ChatBoxView extends StatefulWidget {
+
+  ChatBoxView({Key key, this.onRemoveClick}) : super(key: key);
+
+  final RemoveClick onRemoveClick;
+
   @override
   State<StatefulWidget> createState() {
     return _ChatBoxState();
   }
 }
 
+
 class _ChatBoxState extends State<ChatBoxView> {
+
+
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -33,10 +45,22 @@ class _ChatBoxState extends State<ChatBoxView> {
                   blurRadius: 5.0,
                 ),
               ]),
-              child: Text(
-                "Birtu",
-                style: TextStyle(color: Colors.white, fontSize: 20),
-              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Text(
+                    "Birtu",
+                    style: TextStyle(color: Colors.white, fontSize: 20),
+                  ),
+                  InkWell(
+                    child:Icon(Icons.remove,color: Colors.white,) ,
+                    onTap: (){
+                      widget.onRemoveClick();
+                    },
+                  )
+
+                ],
+              )
             ),
             Container(
               height: 400,

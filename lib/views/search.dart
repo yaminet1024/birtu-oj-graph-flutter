@@ -29,58 +29,59 @@ class _SearchPageState extends State<SearchPage>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        // constraints: BoxConstraints(
-        //   minWidth: 300
-        // ),
-        child: Column(
-          children: <Widget>[
-            // Text("$arguments[]"),
-            Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                boxShadow: [
-                  BoxShadow(
-                      color: Colors.black38, offset: Offset(-30, -30), blurRadius: 8)
-                ]
+      body: SafeArea(
+        child: Container(
+          // constraints: BoxConstraints(
+          //   minWidth: 300
+          // ),
+          child: Column(
+            children: <Widget>[
+              // Text("$arguments[]"),
+              Container(
+//                decoration: BoxDecoration(
+//                  color: Colors.white,
+//                  boxShadow: [
+//                    BoxShadow(
+//                        color: Colors.black38, offset: Offset(-30, -30), blurRadius: 8)
+//                  ]
+//                ),
+                padding: EdgeInsets.only(bottom:28),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    if (!ResponsiveLayout.isSmallScreen(context))
+                      NavBar(showSearch: true)
+                    else
+                      Column(
+                        children: [
+                          NavBar(showSearch: false),
+                          SearchInput(
+                            onClick: (){
+                            },
+                          )
+                        ]
+                      )
+                  ]
+                )
               ),
-              padding: EdgeInsets.only(bottom:28),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  if (!ResponsiveLayout.isSmallScreen(context))
-                    NavBar(showSearch: true)
-                  else 
-                    Column(
-                      children: [
-                        NavBar(showSearch: false),
-                        SearchInput(
-                          onClick: (){
-                            print("喻彩平大宝贝，我爱你呀");
-                          },
-                        )
-                      ]
-                    )
-                ]
-              )
-            ),
-            Expanded(
-              child: Container(
-                // height: double.infinity,
-                child: SearchFailed(),
-                width: double.infinity,
-                // height: 200,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(colors: [
-                    Color(0XFFF8FAFC),
-                    // Colors.red,
-                    Color(0xFFF8FBFF),
-                  ]),      
-                ), 
+              Expanded(
+                child: Container(
+                  // height: double.infinity,
+                  child: SearchFailed(),
+                  width: double.infinity,
+                  // height: 200,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(colors: [
+                      Color(0XFFF8FAFC),
+                      // Colors.red,
+                      Color(0xFFF8FBFF),
+                    ]),
+                  ),
+                ),
               ),
-            ),
-          ]
-        )
+            ]
+          )
+        ),
       ),
     );
   }
