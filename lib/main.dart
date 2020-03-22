@@ -1,4 +1,4 @@
-// import 'package:educational_robot/service/grpc_service.dart';
+import 'package:educational_robot/service/grpc_service.dart';
 import 'package:flutter/material.dart';
 // import 'widgets/navbar.dart';
 // import 'utils/responsiveLayout.dart';
@@ -64,8 +64,8 @@ class MyApp extends StatelessWidget {
 //         gradient: LinearGradient(colors: [
 //           Color(0xFFF8FBFF),
 //           Color(0xFFFCFDFD),
-//         ]),      
-//       ), 
+//         ]),
+//       ),
 //       child: Scaffold(
 //         backgroundColor: Colors.transparent,
 //         body: SingleChildScrollView(

@@ -1,8 +1,11 @@
 import 'package:educational_robot/service/grpc_service.dart';
+import 'package:educational_robot/utils/responsiveLayout.dart';
+import 'package:educational_robot/views/chat_box.dart';
+import 'package:educational_robot/widgets/navbar.dart';
+import 'package:educational_robot/widgets/search.dart';
 import 'package:flutter/material.dart';
-import '../widgets/navbar.dart';
-import '../utils/responsiveLayout.dart';
-import '../widgets/search.dart';
+
+
 
 class MyHomePage extends StatefulWidget{
   @override
@@ -13,6 +16,8 @@ class MyHomePage extends StatefulWidget{
 }
 
 class MyHomePageState extends State<MyHomePage> {
+
+  bool showChatView = false;
 
 
   @override
@@ -29,18 +34,34 @@ class MyHomePageState extends State<MyHomePage> {
         gradient: LinearGradient(colors: [
           Color(0xFFF8FBFF),
           Color(0xFFFCFDFD),
-        ]),      
-      ), 
+        ]),
+      ),
       child: Scaffold(
-        backgroundColor: Colors.transparent,
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              NavBar(showSearch: false,),
-              Body()
-            ]
+          backgroundColor: Colors.transparent,
+          body: SingleChildScrollView(
+              child: Container(
+                child: Column(
+                  children: <Widget>[
+                    NavBar(showSearch: false,onNavBarItemClick: (String s){
+                      setState(() {
+                        showChatView = !showChatView;
+                      });
+                    },),
+                    Container(
+                      height: 700,
+                      child: Stack(
+                        children: <Widget>[
+                          Body(),
+                          showChatView? Positioned(
+                            right: 40,
+                            child: ChatBoxView(),): Container(),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              )
           )
-        )
       ),
     );
   }
@@ -88,7 +109,7 @@ class LargeChild extends StatelessWidget {
                     text: TextSpan(
                         text: "WellCome To ",
                         style:
-                            TextStyle(fontSize: 60, color: Color(0xFF8591B0)),
+                        TextStyle(fontSize: 60, color: Color(0xFF8591B0)),
                         children: [
                           TextSpan(
                               text: "Britu",
@@ -102,8 +123,8 @@ class LargeChild extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.only(left: 12.0, top: 20),
                       child: Text("开始我们的学习吧！"),
-                     ),
                     ),
+                  ),
                   Search()
                 ],
               ),
