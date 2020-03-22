@@ -48,12 +48,12 @@ class GrpcService{
   }
 
   void getProblem() async{
-    final problemStub = ProblemClient(_channelClient);
-    // var response = await 
-    var requestParams = new ProblemRequest();
-    requestParams.limit = Int64(2);
+    final problemStub = ProblemServiceClient(_channelClient);
+    var requestParams = new ProblemRequest()
+                            ..page = 1
+                            ..limit = 20;
     var response = await problemStub.getProblem(requestParams);
-    print(response.content);
+    print(response.resultMessage.message);
   }
 
 
