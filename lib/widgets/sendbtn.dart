@@ -31,7 +31,7 @@ class SendBtn extends StatelessWidget {
               print(searchText);
               // Navigator.push(
               //     context, MaterialPageRoute(builder: (context) => SearchPage()));
-              Navigator.of(context).pushNamed('/search');
+              Navigator.pushNamed(context, '/search',  arguments: {"searchContent": searchText} );
             },
             child: Center(
               child: Row(

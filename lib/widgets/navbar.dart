@@ -3,7 +3,7 @@ import '../utils/responsiveLayout.dart';
 import '../views/search.dart';
 
 class NavBar extends StatelessWidget {
-  final navLinks = ["首页", "友情链接"];
+  final navLinks = ["首页", "问答系统"];
   NavBar({Key key, this.showSearch}) : super(key: key);
   final bool showSearch;
 

@@ -5,6 +5,10 @@ import '../utils/responsiveLayout.dart';
 
 
 class SearchPage extends StatefulWidget{
+  // SearchPage({this.arguments});
+  // final String arguments;
+  SearchPage({this.arguments});
+  final Map arguments;
   @override
   State<StatefulWidget> createState() {
     return _SearchPageState();
@@ -13,6 +17,14 @@ class SearchPage extends StatefulWidget{
 }
 
 class _SearchPageState extends State<SearchPage>{
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    // print(1);
+    print(widget.arguments);
+    // print(arguments['searchContent']);
+  }
   // var _searchResult = null;
   @override
   Widget build(BuildContext context) {
@@ -23,6 +35,7 @@ class _SearchPageState extends State<SearchPage>{
         // ),
         child: Column(
           children: <Widget>[
+            // Text("$arguments[]"),
             Container(
               decoration: BoxDecoration(
                 color: Colors.white,
@@ -128,10 +141,10 @@ class SearchInput extends StatelessWidget {
               Icons.search,
               color: Colors.black54,
             ),
-            onTap: onClick,
-            // onTap: () {
-            //   print(onClick);
-            // },
+            // onTap: onClick,
+            onTap: () {
+              // print(this.arguments);
+            },
           ),
         ),
       ],
