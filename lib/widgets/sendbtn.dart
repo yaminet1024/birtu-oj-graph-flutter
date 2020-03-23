@@ -28,9 +28,7 @@ class SendBtn extends StatelessWidget {
           color: Colors.transparent,
           child: InkWell(
             onTap: () {
-              print(searchText);
-              // Navigator.push(
-              //     context, MaterialPageRoute(builder: (context) => SearchPage()));
+              // print(searchText);
               Navigator.pushNamed(context, '/search',  arguments: {"searchContent": searchText} );
             },
             child: Center(

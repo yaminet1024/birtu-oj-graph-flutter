@@ -1,4 +1,4 @@
-import 'package:educational_robot/views/chat_box.dart';
+// import 'package:educational_robot/views/chat_box.dart';
 import 'package:flutter/material.dart';
 import '../utils/responsiveLayout.dart';
 import '../views/search.dart';
@@ -6,11 +6,11 @@ import '../views/search.dart';
 typedef NavBarItemClick = void Function(String s);
 
 class NavBar extends StatelessWidget {
-  final navLinks = ["首页", "友情链接"];
+  final navLinks = ["首页", "问答系统"];
 
-  NavBar({Key key, this.showSearch, this.onNavBarItemClick}) : super(key: key);
+  NavBar({Key key, this.showSearch, this.onNavBarItemClick, this.initKey}) : super(key: key);
   final bool showSearch;
-
+  final initKey;
   final NavBarItemClick onNavBarItemClick;
 
   List<Widget> navItem() {
@@ -59,7 +59,13 @@ class NavBar extends StatelessWidget {
                       width: 16,
                     ),
                     Text("Britu", style: TextStyle(fontSize: 26)),
-                    if (showSearch) SearchInput()
+                    if (showSearch) 
+                      SearchInput(
+                        onClick: (){
+                          print('何冲呀');
+                        },
+                        initKey: initKey
+                      )
                   ],
                 ),
                 if (!ResponsiveLayout.isSmallScreen(context))

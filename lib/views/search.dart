@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import '../widgets/navbar.dart';
 import '../widgets/searchFailed.dart';
 import '../utils/responsiveLayout.dart';
 
 
 class SearchPage extends StatefulWidget{
-  // SearchPage({this.arguments});
-  // final String arguments;
   SearchPage({this.arguments});
   final Map arguments;
   @override
@@ -17,47 +16,47 @@ class SearchPage extends StatefulWidget{
 }
 
 class _SearchPageState extends State<SearchPage>{
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    // print(1);
-    print(widget.arguments);
-    // print(arguments['searchContent']);
-  }
-  // var _searchResult = null;
+  bool showChatView = false;
+  var searchKey;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
         child: Container(
-          // constraints: BoxConstraints(
-          //   minWidth: 300
-          // ),
           child: Column(
             children: <Widget>[
-              // Text("$arguments[]"),
               Container(
-//                decoration: BoxDecoration(
-//                  color: Colors.white,
-//                  boxShadow: [
-//                    BoxShadow(
-//                        color: Colors.black38, offset: Offset(-30, -30), blurRadius: 8)
-//                  ]
-//                ),
+                color: Colors.white,
                 padding: EdgeInsets.only(bottom:28),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     if (!ResponsiveLayout.isSmallScreen(context))
-                      NavBar(showSearch: true)
+                      NavBar(showSearch: true,onNavBarItemClick: (String s){
+                        if (s == "首页") {
+                          Navigator.pushNamed(context, '/');
+                        } else {
+                          setState(() {
+                            showChatView = !showChatView;
+                          });
+                        }
+                      },
+                      initKey:searchKey != null ? searchKey : widget.arguments["searchContent"],
+                    )
                     else
                       Column(
                         children: [
                           NavBar(showSearch: false),
                           SearchInput(
                             onClick: (){
+                              print('何冲呀');
                             },
+                            initKey: searchKey != null ? searchKey : widget.arguments["searchContent"],
+                            onInputSearchChange: (String s) {
+                              setState(() {
+                                searchKey = s;
+                              });
+                            }
                           )
                         ]
                       )
@@ -66,14 +65,11 @@ class _SearchPageState extends State<SearchPage>{
               ),
               Expanded(
                 child: Container(
-                  // height: double.infinity,
                   child: SearchFailed(),
                   width: double.infinity,
-                  // height: 200,
                   decoration: BoxDecoration(
                     gradient: LinearGradient(colors: [
                       Color(0XFFF8FAFC),
-                      // Colors.red,
                       Color(0xFFF8FBFF),
                     ]),
                   ),
@@ -88,21 +84,21 @@ class _SearchPageState extends State<SearchPage>{
 }
 
 typedef GestureTapCallback = void Function();
-
-
-//class SearchInput extends StatefulWidget {
-//  @override
-//  _SearchInputState createState() => _SearchInputState();
-//}
+typedef InputSearchChange = void Function(String s);
 
 class SearchInput extends StatelessWidget {
     // SearchInput({this.onClick});
-    SearchInput({Key key, this.onClick}) : super(key: key);
+  SearchInput({Key key, this.onClick, this.initKey, this.onInputSearchChange}) : super(key: key);
 
   final GestureTapCallback onClick;
+  final InputSearchChange onInputSearchChange;
+  final String initKey;
+  final TextEditingController _selectionController =  TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+     _selectionController.text = initKey;
+     _selectionController.selection = TextSelection(baseOffset: _selectionController.text.length , extentOffset: _selectionController.text.length);
     return Stack(
       alignment: const Alignment(1, 1),
       children: <Widget>[
@@ -110,7 +106,14 @@ class SearchInput extends StatelessWidget {
           width: 500,
           padding: EdgeInsets.only(left:45,right:45),
           child:TextField(
+            controller: _selectionController,
             style: TextStyle(textBaseline: TextBaseline.alphabetic),
+            onChanged: (String s){
+              onInputSearchChange(s);
+              // _selectionController.selection = TextSelection.fromPosition(
+              //   TextPosition(offset: _selectionController.text.length)
+              // );
+            },
             decoration: InputDecoration(
               hintText: "输入问题搜索...",
               contentPadding: EdgeInsets.only(left: 20, right: 40, top: 10, bottom: 10),
@@ -144,7 +147,7 @@ class SearchInput extends StatelessWidget {
             ),
             // onTap: onClick,
             onTap: () {
-              // print(this.arguments);
+              onClick();
             },
           ),
         ),
