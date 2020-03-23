@@ -17,7 +17,7 @@ class SearchPage extends StatefulWidget{
 
 class _SearchPageState extends State<SearchPage>{
   bool showChatView = false;
-  var searchKey;
+  var searchKey;//让搜索框保持
   @override
   Widget build(BuildContext context) {
     return Scaffold(
