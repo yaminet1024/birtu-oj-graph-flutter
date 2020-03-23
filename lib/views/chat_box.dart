@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:educational_robot/service/qa_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -14,7 +17,31 @@ class ChatBoxView extends StatefulWidget {
   }
 }
 
+class MessageModel{
+  int author = 0; //0是机器人，1是自己
+  String message;
+}
+
 class _ChatBoxState extends State<ChatBoxView> {
+
+  List<MessageModel> chatListData = [];
+
+  final qaController = TextEditingController();
+  final ScrollController _listController = ScrollController();
+
+
+
+  @override
+  void initState() {
+    super.initState();
+    MessageModel welcomeMessage = MessageModel();
+    welcomeMessage.message = "你好呀，我是你的专属学习顾问Birtu精灵。";
+    welcomeMessage.author = 0;
+    setState(() {
+      chatListData.add(welcomeMessage);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -63,18 +90,15 @@ class _ChatBoxState extends State<ChatBoxView> {
               //聊天框
               Container(
                 height: 400,
-//                color: Color(0XFFf8fafc),
               color: Colors.white,
                 width: double.maxFinite,
-                child:  ListView(
-                  children: <Widget>[
-                    chatItem(),
-                    myChatItem(),
-                    chatItem(),
-                    myChatItem(),
-                    chatItem(),
-                  ],
-                ),
+                child:  ListView.builder(itemBuilder: (BuildContext context,int index){
+                  if(chatListData[index].author == 0){
+                    return chatItem(chatListData[index]);
+                  }else{
+                    return myChatItem(chatListData[index]);
+                  }
+                },itemCount: chatListData.length,controller: _listController,),
               ),
               Container(
                 width: double.maxFinite,
@@ -97,6 +121,7 @@ class _ChatBoxState extends State<ChatBoxView> {
                     TextField(
                       keyboardType: TextInputType.multiline,
                       maxLines: 4,
+                      controller: qaController,
                       decoration: const InputDecoration(
                         hintText: '问我点什么吧，比如P101的题目是什么？',
                         filled: true,
@@ -117,7 +142,31 @@ class _ChatBoxState extends State<ChatBoxView> {
                         bottom: 2,
                         right: 8,
                         child: FlatButton(
-                            onPressed: () {},
+                            onPressed: () async{
+                              if(qaController.text.isEmpty){
+                                return;
+                              }
+                              String inputText = qaController.text;
+                              qaController.clear();
+
+                              MessageModel myMessageModel = MessageModel();
+                              myMessageModel.message = inputText;
+                              myMessageModel.author = 1;
+                              setState(() {
+                                chatListData.add(myMessageModel);
+                                scrollToListBottom();
+                              });
+
+                              QAService().getAnswer(inputText, (int errCode, String s){
+                                MessageModel birtuMessageModel = MessageModel();
+                                birtuMessageModel.message = s;
+                                birtuMessageModel.author = 0;
+                                setState(() {
+                                  chatListData.add(birtuMessageModel);
+                                  scrollToListBottom();
+                                });
+                              });
+                            },
                             child: Text(
                               "发送",
                               style: TextStyle(color: Colors.white),
@@ -146,9 +195,17 @@ class _ChatBoxState extends State<ChatBoxView> {
       ),
     );
   }
+
+  void scrollToListBottom(){
+    if(chatListData.length > 0){
+      Timer(Duration(milliseconds: 100), (){
+        _listController.animateTo(_listController.position.maxScrollExtent, duration: const Duration(milliseconds: 100), curve: Curves.easeOut,);
+      });
+    }
+  }
   
   
-  Widget chatItem(){
+  Widget chatItem(MessageModel messageModel){
     return Container(
       padding: EdgeInsets.all(16),
       child: Column(
@@ -167,7 +224,7 @@ class _ChatBoxState extends State<ChatBoxView> {
             width: double.maxFinite,
             margin: EdgeInsets.only(left: 36,bottom: 16,right: 16,top: 4),
             padding: EdgeInsets.all(12),
-            child: Text("你好呀，我是你的专属学习顾问Birtu精灵。",style: TextStyle(
+            child: Text(messageModel.message,style: TextStyle(
               color: Color(0XFF3c4248)
             ),),
             decoration: BoxDecoration(
@@ -180,7 +237,7 @@ class _ChatBoxState extends State<ChatBoxView> {
     );
   }
 
-  Widget myChatItem(){
+  Widget myChatItem(MessageModel messageModel){
     return Container(
       padding: EdgeInsets.all(16),
       child: Column(
@@ -202,7 +259,7 @@ class _ChatBoxState extends State<ChatBoxView> {
           Container(
             margin: EdgeInsets.only(left: 36,bottom: 16,right: 16,top: 4),
             padding: EdgeInsets.all(12),
-            child: Text("请问P101的题解是多少？",style: TextStyle(
+            child: Text(messageModel.message,style: TextStyle(
                 color: Color(0XFF3c4248)
             ),),
             decoration: BoxDecoration(

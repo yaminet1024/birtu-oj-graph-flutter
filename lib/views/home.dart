@@ -17,7 +17,7 @@ class MyHomePage extends StatefulWidget{
 
 class MyHomePageState extends State<MyHomePage> {
 
-  bool showChatView = true;
+  bool showChatView = false;
 
 
   @override

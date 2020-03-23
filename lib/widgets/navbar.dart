@@ -6,7 +6,7 @@ import '../views/search.dart';
 typedef NavBarItemClick = void Function(String s);
 
 class NavBar extends StatelessWidget {
-  final navLinks = ["首页", "问答系统"];
+  final navLinks = ["首页", "Birtu精灵"];
 
   NavBar({Key key, this.showSearch, this.onNavBarItemClick, this.initKey}) : super(key: key);
   final bool showSearch;
@@ -15,14 +15,23 @@ class NavBar extends StatelessWidget {
 
   List<Widget> navItem() {
     return navLinks.map((text) {
-      return InkWell(
-          child: Padding(
-            padding: EdgeInsets.only(left: 18),
-            child: Text(text, style: TextStyle(fontFamily: "Montserrat-Bold")),
-          ),
-          onTap: () {
-            onNavBarItemClick(text);
-          });
+      return Container(
+        margin: EdgeInsets.only(left: 18),
+        child: InkWell(
+            child: Row(
+              children: <Widget>[
+                text == "Birtu精灵" ?  Container(
+                  margin: EdgeInsets.only(right: 4),
+                  child: Image.asset("assets/fairy.png",
+                      width: 26, height: 26),
+                ) : Container(),
+                Text(text, style: TextStyle(fontFamily: "Montserrat-Bold")),
+              ],
+            ),
+            onTap: () {
+              onNavBarItemClick(text);
+            }),
+      );
     }).toList();
   }
 
