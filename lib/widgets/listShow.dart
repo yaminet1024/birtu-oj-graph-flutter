@@ -16,24 +16,26 @@ class ListShow extends StatelessWidget {
                   child: SlideAnimation( //滑动动画
                       verticalOffset: 50.0,
                       child: FadeInAnimation( //渐隐渐现动画
+                        child: InkWell(
                           child: Container(
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                border: Border(
-                                  top: BorderSide(color: Color(0xFFff5f3f5), width: 1, style: BorderStyle.solid),
-                                  right: BorderSide(color: Color(0xFFff5f3f5), width: 1, style: BorderStyle.solid),
-                                  left: BorderSide(color: Color(0xFFff5f3f5), width: 1, style: BorderStyle.solid),
-                                )
+                            padding: EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              border: Border(
+                                top: BorderSide(color: Color(0xFFff5f3f5), width: 1, style: BorderStyle.solid),
+                                right: BorderSide(color: Color(0xFFff5f3f5), width: 1, style: BorderStyle.solid),
+                                left: BorderSide(color: Color(0xFFff5f3f5), width: 1, style: BorderStyle.solid),
+                              )
+                            ),
+                            child: ListTile(
+                              title: Text('Horse'),
+                              trailing: Icon(Icons.keyboard_arrow_right),
+                              subtitle: Container(
+                                child: Text('你是时候是分很多考虑')
                               ),
-                              height: 60,
-                              child: ListTile(
-                                title: Text('Horse'),
-                                trailing: Icon(Icons.keyboard_arrow_right),
-                                subtitle: Container(
-                                  child: Text('你是时候是分很多考虑')
-                                ),
-                              ),
-                          ),
+                            ),
+                          ), 
+                        ),
                       ),
                   ),
               );

@@ -51,9 +51,8 @@ class GrpcService{
                             ..page = 1
                             ..limit = 20;
     var response = await problemStub.getProblem(requestParams);
-    print(response.resultMessage.message);
+    // print(response.resultMessage.message);
+    print(response.problemList[0]);
   }
-
-
 
 }

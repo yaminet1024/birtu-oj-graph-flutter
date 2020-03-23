@@ -1,3 +1,4 @@
+import 'package:educational_robot/service/grpc_service.dart';
 import 'package:educational_robot/widgets/listShow.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -17,8 +18,17 @@ class SearchPage extends StatefulWidget{
 }
 
 class _SearchPageState extends State<SearchPage>{
+
+  @override
+  void initState() {
+    super.initState();
+    GrpcService().sayHelloToGrpc();
+    GrpcService().getProblem();
+  }
+
   bool showChatView = false;
   var searchKey;//让搜索框保持
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
