@@ -54,7 +54,7 @@ class MyHomePageState extends State<MyHomePage> {
                           children: <Widget>[
                             Body(),
                             Positioned(
-                               right: 16,
+                               right: ResponsiveLayout.isSmallScreen(context) ? 16 : 45,
                                 child: AnimatedContainer(
                                   height: showChatView? 610:0,
                                   duration: Duration(milliseconds: 300),
@@ -192,9 +192,6 @@ class SmallChild extends StatelessWidget {
                 scale: 1,
               ),
             ),
-//            SizedBox(
-//              height: 32,
-//            ),
             Search(),
             SizedBox(
               height: 30,

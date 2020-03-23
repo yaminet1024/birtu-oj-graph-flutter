@@ -1,3 +1,4 @@
+import 'package:educational_robot/widgets/listShow.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import '../widgets/navbar.dart';
@@ -26,8 +27,8 @@ class _SearchPageState extends State<SearchPage>{
           child: Column(
             children: <Widget>[
               Container(
-                color: Colors.white,
                 padding: EdgeInsets.only(bottom:28),
+                color: Colors.white,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -63,18 +64,34 @@ class _SearchPageState extends State<SearchPage>{
                   ]
                 )
               ),
+              // Expanded(
+              //   child: Container(
+              //     child: SearchFailed(),
+              //     width: double.infinity,
+              //     decoration: BoxDecoration(
+              //       gradient: LinearGradient(colors: [
+              //         Color(0XFFF8FAFC),
+              //         Color(0xFFF8FBFF),
+              //       ]),
+              //     ),
+              //   ),
+              // ),
               Expanded(
                 child: Container(
-                  child: SearchFailed(),
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(colors: [
-                      Color(0XFFF8FAFC),
-                      Color(0xFFF8FBFF),
-                    ]),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(colors: [
+                    Color(0XFFF8FAFC),
+                    Color(0xFFF8FBFF),
+                   ]),
+                  // color: Color(0xFFf5f3f5)
                   ),
+                  padding: ResponsiveLayout.isSmallScreen(context) 
+                          ?
+                          EdgeInsets.symmetric(horizontal: 16, vertical: 30)
+                          : EdgeInsets.symmetric(horizontal: 80, vertical: 30),
+                  child: ListShow(),
                 ),
-              ),
+              )
             ]
           )
         ),
@@ -110,9 +127,6 @@ class SearchInput extends StatelessWidget {
             style: TextStyle(textBaseline: TextBaseline.alphabetic),
             onChanged: (String s){
               onInputSearchChange(s);
-              // _selectionController.selection = TextSelection.fromPosition(
-              //   TextPosition(offset: _selectionController.text.length)
-              // );
             },
             decoration: InputDecoration(
               hintText: "输入问题搜索...",
@@ -145,7 +159,6 @@ class SearchInput extends StatelessWidget {
               Icons.search,
               color: Colors.black54,
             ),
-            // onTap: onClick,
             onTap: () {
               onClick();
             },

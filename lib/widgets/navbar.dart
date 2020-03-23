@@ -29,7 +29,10 @@ class NavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 28),
+        padding: ResponsiveLayout.isSmallScreen(context) 
+                 ?
+                 EdgeInsets.symmetric(horizontal: 16, vertical: 28)
+                 : EdgeInsets.symmetric(horizontal: 45, vertical: 28),
         child: Column(
           children: <Widget>[
             Row(
