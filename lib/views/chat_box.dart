@@ -30,7 +30,7 @@ class _ChatBoxState extends State<ChatBoxView> {
         borderRadius: BorderRadius.all(Radius.circular(12.0)),
       ),
       child: Container(
-        width: 360,
+        width: 340,
         height: 600,
         child: Column(
           children: <Widget>[
