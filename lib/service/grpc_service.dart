@@ -3,7 +3,7 @@ import 'dart:io';
 
 // import 'package:fixnum/fixnum.dart';
 import 'package:grpc/grpc.dart';
-//import 'package:grpc/grpc_web.dart';
+import 'package:grpc/grpc_web.dart';
 import 'package:grpclib/grpclib.dart';
 
 class GrpcService{
@@ -34,10 +34,10 @@ class GrpcService{
           options: const ChannelOptions(credentials: ChannelCredentials.insecure()),
         );
       }else{
-//        _channelClient = GrpcWebClientChannel.xhr(Uri.parse("http://localhost:6060"));
+        _channelClient = GrpcWebClientChannel.xhr(Uri.parse("http://localhost:6060"));
       }
     }catch (e){
-//      _channelClient = GrpcWebClientChannel.xhr(Uri.parse("http://ttl317.top:6060"));
+      _channelClient = GrpcWebClientChannel.xhr(Uri.parse("http://ttl317.top:6060"));
     }
   }
 

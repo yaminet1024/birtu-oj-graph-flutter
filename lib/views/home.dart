@@ -54,7 +54,8 @@ class MyHomePageState extends State<MyHomePage> {
                           children: <Widget>[
                             Body(),
                             showChatView? Positioned(
-                              right: 40,
+                              right: 16,
+                              left: 16,
                               child: ChatBoxView(
                                 onRemoveClick: (){
                                   setState(() {
