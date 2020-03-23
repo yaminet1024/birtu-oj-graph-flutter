@@ -51,18 +51,21 @@ class MyHomePageState extends State<MyHomePage> {
                       Container(
                         height: 700,
                         child: Stack(
-                          fit: StackFit.expand,
                           children: <Widget>[
                             Body(),
-                            showChatView? Positioned(
-                              right: 16,
-                              child: ChatBoxView(
-                                onRemoveClick: (){
-                                  setState(() {
-                                    showChatView = !showChatView;
-                                  });
-                                },
-                              ),): Container(),
+                            Positioned(
+                               right: 16,
+                                child: AnimatedContainer(
+                                  height: showChatView? 610:0,
+                                  duration: Duration(milliseconds: 300),
+                                  curve: Curves.decelerate,
+                                  child: ChatBoxView(onRemoveClick: (){
+                                    setState(() {
+                                      showChatView = !showChatView;
+                                    });
+                                  },),
+                                ),
+                            ),
                           ],
                         ),
                       ),
