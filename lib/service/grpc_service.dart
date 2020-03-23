@@ -33,8 +33,6 @@ class GrpcService{
           port: 9090,
           options: const ChannelOptions(credentials: ChannelCredentials.insecure()),
         );
-      }else{
-        _channelClient = GrpcWebClientChannel.xhr(Uri.parse("http://localhost:6060"));
       }
     }catch (e){
       _channelClient = GrpcWebClientChannel.xhr(Uri.parse("http://ttl317.top:6060"));
