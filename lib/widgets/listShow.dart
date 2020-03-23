@@ -17,7 +17,6 @@ class ListShow extends StatelessWidget {
                       verticalOffset: 50.0,
                       child: FadeInAnimation( //渐隐渐现动画
                           child: Container(
-                              // margin: EdgeInsets.all(5),
                               decoration: BoxDecoration(
                                 color: Colors.white,
                                 border: Border(
@@ -27,6 +26,13 @@ class ListShow extends StatelessWidget {
                                 )
                               ),
                               height: 60,
+                              child: ListTile(
+                                title: Text('Horse'),
+                                trailing: Icon(Icons.keyboard_arrow_right),
+                                subtitle: Container(
+                                  child: Text('你是时候是分很多考虑')
+                                ),
+                              ),
                           ),
                       ),
                   ),
