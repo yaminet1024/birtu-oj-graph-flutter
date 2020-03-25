@@ -24,7 +24,6 @@ class MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
     GrpcService().sayHelloToGrpc();
-    GrpcService().getProblem();
   }
 
   @override
@@ -49,7 +48,7 @@ class MyHomePageState extends State<MyHomePage> {
                         });
                       },),
                       Container(
-                        height: 700,
+                        height: 620,
                         child: Stack(
                           children: <Widget>[
                             Body(),

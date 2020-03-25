@@ -10,6 +10,7 @@ class Search extends StatefulWidget {
 
 class _SearchState extends State {
   String _inputText = '';
+  
   @override
   Widget build(BuildContext context) {
     return Padding(

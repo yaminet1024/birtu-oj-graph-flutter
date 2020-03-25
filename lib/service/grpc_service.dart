@@ -2,9 +2,12 @@
 import 'dart:io';
 
 // import 'package:fixnum/fixnum.dart';
+import 'package:educational_robot/service/qa_service.dart';
 import 'package:grpc/grpc.dart';
-//import 'package:grpc/grpc_web.dart';
+import 'package:grpc/grpc_web.dart';
 import 'package:grpclib/grpclib.dart';
+
+typedef onResult = void Function(String errCode, List<ProblemEntity> result);
 
 class GrpcService{
   factory GrpcService() => _getInstance();
@@ -35,7 +38,7 @@ class GrpcService{
         );
       }
     }catch (e){
-//      _channelClient = GrpcWebClientChannel.xhr(Uri.parse("http://ttl317.top:6060"));
+     _channelClient = GrpcWebClientChannel.xhr(Uri.parse("http://ttl317.top:6060"));
     }
   }
 
@@ -45,14 +48,15 @@ class GrpcService{
     print(response.message);
   }
 
-  void getProblem() async{
+
+  getProblem(onResult) async{
     final problemStub = ProblemServiceClient(_channelClient);
     var requestParams = new ProblemRequest()
                             ..page = 1
                             ..limit = 20;
     var response = await problemStub.getProblem(requestParams);
-    // print(response.resultMessage.message);
-    print(response.problemList[0]);
+    // print(response);
+    onResult(response.resultMessage.message, response.problemList);
   }
 
 }

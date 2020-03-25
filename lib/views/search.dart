@@ -1,7 +1,11 @@
+import 'dart:io';
+
 import 'package:educational_robot/service/grpc_service.dart';
 import 'package:educational_robot/widgets/listShow.dart';
+import 'package:educational_robot/widgets/pagination.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:grpclib/grpclib.dart';
 import '../widgets/navbar.dart';
 import '../widgets/searchFailed.dart';
 import '../utils/responsiveLayout.dart';
@@ -10,6 +14,7 @@ import '../utils/responsiveLayout.dart';
 class SearchPage extends StatefulWidget{
   SearchPage({this.arguments});
   final Map arguments;
+
   @override
   State<StatefulWidget> createState() {
     return _SearchPageState();
@@ -18,92 +23,109 @@ class SearchPage extends StatefulWidget{
 }
 
 class _SearchPageState extends State<SearchPage>{
-
-  @override
-  void initState() {
-    super.initState();
-    GrpcService().sayHelloToGrpc();
-    GrpcService().getProblem();
-  }
-
   bool showChatView = false;
   var searchKey;//让搜索框保持
-  
+  var searchResult = [1];
+
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   GrpcService().sayHelloToGrpc();
+  //   GrpcService().getProblem();
+  //   GrpcService().getProblem((String errCode, List<ProblemEntity> result) {
+  //     setState(() {
+  //       errCode == 'success' ? searchResult = result : searchResult = [];    
+  //     });
+  //   });
+  // }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Container(
-          child: Column(
-            children: <Widget>[
-              Container(
-                padding: EdgeInsets.only(bottom:28),
-                color: Colors.white,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    if (!ResponsiveLayout.isSmallScreen(context))
-                      NavBar(showSearch: true,onNavBarItemClick: (String s){
-                        if (s == "首页") {
-                          Navigator.pushNamed(context, '/');
-                        } else {
-                          setState(() {
-                            showChatView = !showChatView;
-                          });
-                        }
-                      },
-                      initKey:searchKey != null ? searchKey : widget.arguments["searchContent"],
-                    )
-                    else
-                      Column(
-                        children: [
-                          NavBar(showSearch: false),
-                          SearchInput(
-                            onClick: (){
-                              print('何冲呀');
-                            },
-                            initKey: searchKey != null ? searchKey : widget.arguments["searchContent"],
-                            onInputSearchChange: (String s) {
+    return Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(colors: [
+          Color(0xFFF8FBFF),
+          Color(0xFFFCFDFD),
+        ]),
+      ),
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        body: SafeArea(
+          child: SingleChildScrollView(
+            child: Container(
+              child: Column(
+                children: <Widget>[
+                  Container(
+                    padding: EdgeInsets.only(bottom:28),
+                    color: Colors.white,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        if (!ResponsiveLayout.isSmallScreen(context))
+                          NavBar(showSearch: true,onNavBarItemClick: (String s){
+                            if (s == "首页") {
+                              Navigator.pushNamed(context, '/');
+                            } else {
                               setState(() {
-                                searchKey = s;
+                                showChatView = !showChatView;
                               });
                             }
+                          },
+                          initKey:searchKey != null ? searchKey : widget.arguments["searchContent"],
+                        )
+                        else
+                          Column(
+                            children: [
+                              NavBar(showSearch: false),
+                              SearchInput(
+                                onClick: (){
+                                  print('何冲呀');
+                                },
+                                initKey: searchKey != null ? searchKey : widget.arguments["searchContent"],
+                                onInputSearchChange: (String s) {
+                                  setState(() {
+                                    searchKey = s;
+                                  });
+                                }
+                              )
+                            ]
                           )
-                        ]
-                      )
-                  ]
-                )
-              ),
-              // Expanded(
-              //   child: Container(
-              //     child: SearchFailed(),
-              //     width: double.infinity,
-              //     decoration: BoxDecoration(
-              //       gradient: LinearGradient(colors: [
-              //         Color(0XFFF8FAFC),
-              //         Color(0xFFF8FBFF),
-              //       ]),
-              //     ),
-              //   ),
-              // ),
-              Expanded(
-                child: Container(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(colors: [
-                    Color(0XFFF8FAFC),
-                    Color(0xFFF8FBFF),
-                   ]),
-                  // color: Color(0xFFf5f3f5)
+                      ]
+                    )
                   ),
-                  padding: ResponsiveLayout.isSmallScreen(context) 
-                          ?
-                          EdgeInsets.symmetric(horizontal: 16, vertical: 30)
-                          : EdgeInsets.symmetric(horizontal: 80, vertical: 30),
-                  child: ListShow(),
-                ),
-              )
-            ]
-          )
+                  searchResult.isEmpty ? 
+                    Center(
+                      child: Container(
+                        height: 400,
+                        child: SearchFailed(),
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(colors: [
+                            Color(0XFFF8FAFC),
+                            Color(0xFFF8FBFF),
+                          ]),
+                        ),
+                      )
+                    )
+                  // )
+                  :
+                  Container(
+                    height: 1000,
+                    padding: ResponsiveLayout.isSmallScreen(context) 
+                            ?
+                            EdgeInsets.symmetric(horizontal: 16, vertical: 30)
+                            : EdgeInsets.symmetric(horizontal: 80, vertical: 30),
+                    child: ListShow(resultList: searchResult),
+                  ),
+                  Container(
+                    child: Center(
+                      child: Pagination(),
+                    ),
+                  )
+                ]
+              ),
+            )
+          ),
         ),
       ),
     );
