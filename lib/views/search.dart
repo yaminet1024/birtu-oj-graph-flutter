@@ -103,7 +103,7 @@ class _SearchPageState extends State<SearchPage>{
                     ]
                   )
                 ),
-                searchResult.isNotEmpty ?
+                searchResult.isEmpty ?
                   Center(
                     child: Container(
                       height: 400,
