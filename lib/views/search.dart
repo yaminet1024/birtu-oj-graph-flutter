@@ -22,9 +22,9 @@ class SearchPage extends StatefulWidget{
 
 class _SearchPageState extends State<SearchPage>{
   bool showChatView = false;
-  var searchKey;//当前搜索的关键字
-  var searchResult = [];
-  var totalPages;
+  String searchKey = "";//当前搜索的关键字
+  List searchResult = [];
+  int totalPages;
   double listHeight = 0;
 
   @override
@@ -57,72 +57,71 @@ class _SearchPageState extends State<SearchPage>{
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body: SafeArea(
-          child: SingleChildScrollView(
-            child: Container(
-              child: Column(
-                children: <Widget>[
-                  Container(
-                    padding: EdgeInsets.only(bottom:28),
-                    color: Colors.white,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        if (!ResponsiveLayout.isSmallScreen(context))
-                          NavBar(showSearch: true,onNavBarItemClick: (String s){
-                            if (s == "首页") {
-                              Navigator.pushNamed(context, '/');
-                            } else {
-                              setState(() {
-                                showChatView = !showChatView;
-                              });
-                            }
-                          },
-                          initKey:searchKey != null ? searchKey : widget.arguments["searchContent"],
-                          onInputSearchChange: (String s) {
+          child: Container(
+            child: Column(
+              children: <Widget>[
+                Container(
+                  padding: EdgeInsets.only(bottom:28),
+                  color: Colors.white,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      if (!ResponsiveLayout.isSmallScreen(context))
+                        NavBar(showSearch: true,onNavBarItemClick: (String s){
+                          if (s == "首页") {
+                            Navigator.pushNamed(context, '/');
+                          } else {
                             setState(() {
-                              searchKey = s;
+                              showChatView = !showChatView;
                             });
-                          },
-                        )
-                        else
-                          Column(
-                            children: [
-                              NavBar(showSearch: false),
-                              SearchInput(
-                                onClick: (){
-                                  print('何冲呀');
-                                },
-                                initKey: searchKey != null ? searchKey : widget.arguments["searchContent"],
-                                onInputSearchChange: (String s) {
-                                  setState(() {
-                                    searchKey = s;
-                                  });
-                                }
-                              )
-                            ]
-                          )
-                      ]
-                    )
-                  ),
-                  searchResult.isEmpty ? 
-                    Center(
-                      child: Container(
-                        height: 400,
-                        child: SearchFailed(),
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(colors: [
-                            Color(0XFFF8FAFC),
-                            Color(0xFFF8FBFF),
-                          ]),
-                        ),
+                          }
+                        },
+                        initKey:searchKey != null ? searchKey : widget.arguments["searchContent"],
+                        onInputSearchChange: (String s) {
+                          setState(() {
+                            searchKey = s;
+                          });
+                        },
                       )
+                      else
+                        Column(
+                          children: [
+                            NavBar(showSearch: false),
+                            SearchInput(
+                              onClick: (){
+                                print('何冲呀');
+                              },
+                              initKey: searchKey != null ? searchKey : widget.arguments["searchContent"],
+                              onInputSearchChange: (String s) {
+                                setState(() {
+                                  searchKey = s;
+                                });
+                              }
+                            )
+                          ]
+                        )
+                    ]
+                  )
+                ),
+                searchResult.isNotEmpty ?
+                  Center(
+                    child: Container(
+                      height: 400,
+                      child: SearchFailed(),
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(colors: [
+                          Color(0XFFF8FAFC),
+                          Color(0xFFF8FBFF),
+                        ]),
+                      ),
                     )
-                  // )
-                  :
-                  Container(
-                    height: listHeight,
-                    padding: ResponsiveLayout.isSmallScreen(context) 
+                  )
+                // )
+                :
+                Flexible(
+                  child: Container(
+                    padding: ResponsiveLayout.isSmallScreen(context)
                             ?
                             EdgeInsets.symmetric(horizontal: 16, vertical: 30)
                             : EdgeInsets.symmetric(horizontal: 80, vertical: 30),
@@ -140,9 +139,9 @@ class _SearchPageState extends State<SearchPage>{
                       });
                     },)
                   ),
-                ]
-              ),
-            )
+                ),
+              ]
+            ),
           ),
         ),
       ),

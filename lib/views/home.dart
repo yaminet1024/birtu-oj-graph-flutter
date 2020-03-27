@@ -46,7 +46,7 @@ class MyHomePageState extends State<MyHomePage> {
                         });
                       },),
                       Container(
-                        height: 620,
+                        height: 700,
                         child: Stack(
                           children: <Widget>[
                             Body(),

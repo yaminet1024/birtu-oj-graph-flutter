@@ -10,16 +10,16 @@ typedef PageItemClick = void Function(String searchKey, int cur);
 
 class ListShow extends StatelessWidget {
   final List resultList;
-  final seachKey;
+  final String seachKey;
   final PageItemClick onPageItemClick; 
-  final totalPages;
+  final int totalPages;
   ListShow({this.resultList, this.seachKey ,this.onPageItemClick, this.totalPages});
 
   @override
   Widget build(BuildContext context) {
     return AnimationLimiter(
       child:ListView.builder(
-        itemCount: resultList.length + 1,
+        itemCount: resultList.length == 0 ? 0 : resultList.length + 1,
         itemBuilder: (context,index){
               if(index == resultList.length) {
                 return Container(

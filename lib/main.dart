@@ -6,7 +6,9 @@ import 'package:flutter/material.dart';
 // import './views/search.dart';
 import 'routes/routes.dart';
 
-void main() => runApp(MyApp());
+void main(){
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   @override
