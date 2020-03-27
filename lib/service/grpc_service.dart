@@ -7,7 +7,7 @@ import 'package:grpc/grpc.dart';
 import 'package:grpc/grpc_web.dart';
 import 'package:grpclib/grpclib.dart';
 
-typedef onResult = void Function(String errCode, List<ProblemEntity> result);
+typedef onResult = void Function(int errCode, List<ProblemEntity> result, int pageSize);
 
 class GrpcService{
   factory GrpcService() => _getInstance();
@@ -49,14 +49,13 @@ class GrpcService{
   }
 
 
-  getProblem(onResult) async{
+  getProblem(index, onResult) async{
     final problemStub = ProblemServiceClient(_channelClient);
     var requestParams = new ProblemRequest()
-                            ..page = 1
+                            ..page = index
                             ..limit = 20;
     var response = await problemStub.getProblem(requestParams);
-    // print(response);
-    onResult(response.resultMessage.message, response.problemList);
+    onResult(response.resultMessage.errCode, response.problemList, response.pageSize);
   }
 
 }

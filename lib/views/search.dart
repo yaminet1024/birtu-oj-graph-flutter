@@ -2,14 +2,12 @@ import 'dart:io';
 
 import 'package:educational_robot/service/grpc_service.dart';
 import 'package:educational_robot/widgets/listShow.dart';
-import 'package:educational_robot/widgets/pagination.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:grpclib/grpclib.dart';
 import '../widgets/navbar.dart';
 import '../widgets/searchFailed.dart';
 import '../utils/responsiveLayout.dart';
-
 
 class SearchPage extends StatefulWidget{
   SearchPage({this.arguments});
@@ -24,20 +22,28 @@ class SearchPage extends StatefulWidget{
 
 class _SearchPageState extends State<SearchPage>{
   bool showChatView = false;
-  var searchKey;//让搜索框保持
-  var searchResult = [1];
+  var searchKey;//当前搜索的关键字
+  var searchResult = [];
+  var totalPages;
+  double listHeight = 0;
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   GrpcService().sayHelloToGrpc();
-  //   GrpcService().getProblem();
-  //   GrpcService().getProblem((String errCode, List<ProblemEntity> result) {
-  //     setState(() {
-  //       errCode == 'success' ? searchResult = result : searchResult = [];    
-  //     });
-  //   });
-  // }
+  @override
+  void initState() {
+    super.initState();
+    GrpcService().getProblem(1,(int errCode, List<ProblemEntity> result, int pageSize) {
+      print(errCode);
+      setState(() {
+        // errCode == 'success' ? searchResult = result : searchResult = [];
+        if(errCode == 0) {
+          searchResult = result;
+          totalPages = pageSize;
+          listHeight = ((searchResult.length + 1) * 95) as double;
+        } else {
+          searchResult = [];
+        }
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,6 +78,11 @@ class _SearchPageState extends State<SearchPage>{
                             }
                           },
                           initKey:searchKey != null ? searchKey : widget.arguments["searchContent"],
+                          onInputSearchChange: (String s) {
+                            setState(() {
+                              searchKey = s;
+                            });
+                          },
                         )
                         else
                           Column(
@@ -110,18 +121,25 @@ class _SearchPageState extends State<SearchPage>{
                   // )
                   :
                   Container(
-                    height: 1000,
+                    height: listHeight,
                     padding: ResponsiveLayout.isSmallScreen(context) 
                             ?
                             EdgeInsets.symmetric(horizontal: 16, vertical: 30)
                             : EdgeInsets.symmetric(horizontal: 80, vertical: 30),
-                    child: ListShow(resultList: searchResult),
+                    child: ListShow(resultList: searchResult, totalPages: totalPages, seachKey: searchKey, onPageItemClick: (String searchKey, int cur) {
+                      GrpcService().getProblem(cur,(int errCode, List<ProblemEntity> result, int pageSize) {
+                        setState(() {
+                          // errCode == 'success' ? searchResult = result : searchResult = [];
+                          if(errCode == 0) {
+                            searchResult = result;
+                            listHeight = ((searchResult.length + 1) * 95) as double;
+                          } else {
+                            searchResult = [];
+                          }
+                        });
+                      });
+                    },)
                   ),
-                  Container(
-                    child: Center(
-                      child: Pagination(),
-                    ),
-                  )
                 ]
               ),
             )

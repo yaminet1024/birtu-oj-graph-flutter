@@ -4,14 +4,16 @@ import '../utils/responsiveLayout.dart';
 import '../views/search.dart';
 
 typedef NavBarItemClick = void Function(String s);
+typedef InputSearchChange = void Function(String s);
 
 class NavBar extends StatelessWidget {
   final navLinks = ["首页", "Birtu精灵"];
 
-  NavBar({Key key, this.showSearch, this.onNavBarItemClick, this.initKey}) : super(key: key);
+  NavBar({Key key, this.showSearch, this.onNavBarItemClick, this.initKey, this.onInputSearchChange}) : super(key: key);
   final bool showSearch;
   final initKey;
   final NavBarItemClick onNavBarItemClick;
+  final InputSearchChange onInputSearchChange;
 
   List<Widget> navItem() {
     return navLinks.map((text) {
@@ -76,7 +78,8 @@ class NavBar extends StatelessWidget {
                         onClick: (){
                           print('何冲呀');
                         },
-                        initKey: initKey
+                        initKey: initKey,
+                        onInputSearchChange: onInputSearchChange
                       )
                   ],
                 ),

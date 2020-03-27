@@ -121,7 +121,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "032c876285383db97c854f4aaaea9c7d014949d7"
+      resolved-ref: "84ea23f845adf78f9be5ebc5d2a8f28656f69f34"
       url: "https://github.com/yaminet1024/oj-grpc-lib"
     source: git
     version: "0.0.2"

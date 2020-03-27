@@ -5,8 +5,6 @@ import 'package:educational_robot/widgets/navbar.dart';
 import 'package:educational_robot/widgets/search.dart';
 import 'package:flutter/material.dart';
 
-
-
 class MyHomePage extends StatefulWidget{
   @override
   State<StatefulWidget> createState() {
@@ -23,7 +21,7 @@ class MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    GrpcService().sayHelloToGrpc();
+    // GrpcService().sayHelloToGrpc();
   }
 
   @override
