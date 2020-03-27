@@ -52,24 +52,27 @@ class _PaginationState extends State<Pagination>{
     return pageList.map((text) {
       return Container(
         margin: EdgeInsets.only(left: 6, right: 6),
-        width: 50,
-        height: 50,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(50),
-          border: cur.toString() == text.toString() ? Border.all(color: Color(0xFF50a1ff), width: 1) : Border.all(color: Color(0xFF78828c).withOpacity(0.1), width: 1),
-        ),
-        child: Center(
-          child: InkWell(
-            child:  cur.toString() == text.toString() ? Text(text.toString(), style: TextStyle(color: Color(0xFF50a1ff), fontFamily: "Montserrat-Bold", fontSize: 16),) :Text(text.toString(), style: TextStyle(fontFamily: "Montserrat-Bold", fontSize: 16),),
-            onTap: () {
-              if (cur.toString() != text.toString() && text.toString() != '...') {
-                setState(() {
-                  cur = text;
-                  pageList  = makePage(widget.totalPages, cur, 2);
-                });
-                widget.onPageItemClick(widget.searchKey, cur);
-              }
-            }),
+        child: GestureDetector(
+          onTap: (){
+            if (cur.toString() != text.toString() && text.toString() != '...') {
+              setState(() {
+                cur = text;
+                pageList  = makePage(widget.totalPages, cur, 2);
+              });
+              widget.onPageItemClick(widget.searchKey, cur);
+            }
+          },
+          child: Container(
+            width: 50,
+            height: 50,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(50),
+              border: cur.toString() == text.toString() ? Border.all(color: Color(0xFF50a1ff), width: 1) : Border.all(color: Color(0xFF78828c).withOpacity(0.1), width: 1),
+            ),
+            child: Center(
+              child: cur.toString() == text.toString() ? Text(text.toString(), style: TextStyle(color: Color(0xFF50a1ff), fontFamily: "Montserrat-Bold", fontSize: 16),) :Text(text.toString(), style: TextStyle(fontFamily: "Montserrat-Bold", fontSize: 16),),
+            ),
+          ),
         ),
       );
     }).toList();
@@ -78,7 +81,7 @@ class _PaginationState extends State<Pagination>{
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 15, vertical: 30),
+      padding: EdgeInsets.only(left: 16,right: 16,top: 16,bottom: 0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween, 
         children: <Widget>[

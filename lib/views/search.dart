@@ -121,17 +121,13 @@ class _SearchPageState extends State<SearchPage>{
                 :
                 Flexible(
                   child: Container(
-                    padding: ResponsiveLayout.isSmallScreen(context)
-                            ?
-                            EdgeInsets.symmetric(horizontal: 16, vertical: 30)
-                            : EdgeInsets.symmetric(horizontal: 80, vertical: 30),
+                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                     child: ListShow(resultList: searchResult, totalPages: totalPages, seachKey: searchKey, onPageItemClick: (String searchKey, int cur) {
                       GrpcService().getProblem(cur,(int errCode, List<ProblemEntity> result, int pageSize) {
                         setState(() {
                           // errCode == 'success' ? searchResult = result : searchResult = [];
                           if(errCode == 0) {
                             searchResult = result;
-                            listHeight = ((searchResult.length + 1) * 95) as double;
                           } else {
                             searchResult = [];
                           }
